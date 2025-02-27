@@ -1,13 +1,5 @@
-import zipfile
-from pathlib import Path
-from typing import Tuple
 
-import fsspec
-import polaris as po
 import polars as pl
-from polaris.competition import CompetitionSpecification
-from polaris.dataset import Subset
-from typeguard import typechecked
 
 from polaris_asap_admet.logger import logger
 
