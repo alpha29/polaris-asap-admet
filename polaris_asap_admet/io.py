@@ -14,7 +14,12 @@ POLARIS_ASAP_ADMET_HOME = os.environ["POLARIS_ASAP_ADMET_HOME"]
 DATA_DIR = Path(POLARIS_ASAP_ADMET_HOME) / "data"
 DATA_DIR_RAW = DATA_DIR / "raw"
 DATA_DIR_CLEAN = DATA_DIR / "clean"
+DATA_DIR_DIRTY = DATA_DIR / "dirty"
 
+# yeah don't do this, but we'll live with it
+DATA_DIR_RAW.mkdir(parents=True, exist_ok=True)
+DATA_DIR_CLEAN.mkdir(parents=True, exist_ok=True)
+DATA_DIR_DIRTY.mkdir(parents=True, exist_ok=True)
 
 @dataclass
 class NamedDataset:
@@ -51,6 +56,7 @@ class NamedDataset:
 
 train_raw = NamedDataset(name="train_raw", filepath=DATA_DIR_RAW / "train_raw.csv")
 test_raw = NamedDataset(name="test_raw", filepath=DATA_DIR_RAW / "test_raw.csv")
+computational_adme_raw = NamedDataset(name="computational_adme_raw", filepath=DATA_DIR_RAW / "ADME_public_set_3521.csv")
 
 HLM_train = NamedDataset("admet_HLM_train", DATA_DIR_CLEAN / "admet_HLM_train.csv")
 KSOL_train = NamedDataset("admet_KSOL_train", DATA_DIR_CLEAN / "admet_KSOL_train.csv")

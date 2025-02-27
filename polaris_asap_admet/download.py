@@ -9,7 +9,7 @@ from polaris.competition import CompetitionSpecification
 from polaris.dataset import Subset
 from typeguard import typechecked
 
-from polaris_asap_admet.io import test_raw, train_raw
+from polaris_asap_admet.io import test_raw, train_raw, admet_train_clean
 from polaris_asap_admet.logger import logger
 from polaris_asap_admet.util import print_info
 
@@ -78,10 +78,14 @@ def download_comp_data():
 TARGETS = ["HLM", "KSOL", "LogD", "MDR1-MDCKII", "MLM",]
 
 def split_train_by_targets():
+    """
+    Create separate training datasets for each target.
+    """
     df = train_raw.read()
     for tgt in TARGETS:
         logger.info(f"Splitting training data for target {tgt}...")
-        df_tgt = df.filter(df["TARGET"] == tgt)
+        df_tgt = df.select(["CXSMILES", tgt]).filter(pl.col(tgt).is_not_null())
+        print_info(df_tgt)
         logger.info(f"Saving {tgt}...")
-        train_raw.save(df_tgt)
+        admet_train_clean[tgt].save(df_tgt)
     logger.info("Done.")
