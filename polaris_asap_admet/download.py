@@ -1,18 +1,23 @@
-
+import pandas as pd
 import polaris as po
 import polars as pl
 from polaris.competition import CompetitionSpecification
-from typeguard import typechecked
 from polaris.dataset import Dataset
-from polaris_asap_admet.io import admet_train_clean, test_raw, train_raw, tdc_lipophilicity_az_raw, tdc_lipophilicity_az_clean
+from typeguard import typechecked
+
+from polaris_asap_admet.io import (admet_train_clean,
+                                   tdc_lipophilicity_az_clean,
+                                   tdc_lipophilicity_az_raw, test_raw,
+                                   train_raw)
 from polaris_asap_admet.logger import logger
 from polaris_asap_admet.util import print_info
-import pandas as pd
+
 CHALLENGE = "antiviral-admet-2025"
 
 ####################################
 # Polaris competition downloads
 ####################################
+
 
 @typechecked
 def load_comp(challenge: str = CHALLENGE) -> CompetitionSpecification:
@@ -95,12 +100,15 @@ def split_train_by_targets():
         admet_train_clean[tgt].save(df_tgt)
     logger.info("Done.")
 
+
 ####################################
 # TDC Commons downloads
 ####################################
 
 
-def get_tdc_lipo_az_raw(ds_name: str = "tdcommons/lipophilicity-astrazeneca", save: bool = False) -> Dataset:
+def get_tdc_lipo_az_raw(
+    ds_name: str = "tdcommons/lipophilicity-astrazeneca", save: bool = False
+) -> Dataset:
     """
     Fetch dataset from Polaris hub.
     """
@@ -121,6 +129,7 @@ def prep_tdc_lipo_az(df: pl.DataFrame, save: bool = False) -> pl.DataFrame:
     if save:
         tdc_lipophilicity_az_clean.save(df)
     return df
+
 
 def make_tdc_lipo_az(save: bool = True) -> pl.DataFrame:
     df = get_tdc_lipo_az_raw("tdcommons/lipophilicity-astrazeneca", save=save)

@@ -1,6 +1,6 @@
 import polars as pl
 
-from polaris_asap_admet.io import (DATA_DIR_DIRTY, MLM_train, MLM_train_combined)
+from polaris_asap_admet.io import DATA_DIR_DIRTY, MLM_train, MLM_train_combined
 from polaris_asap_admet.logger import logger
 from polaris_asap_admet.util import print_info
 
@@ -41,11 +41,15 @@ def convert_mlm_units():
     df_computational.write_csv(DATA_DIR_DIRTY / "computational_adme_MLM_converted.csv")
     return df_computational
 
+
 def combine():
-    df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_MLM_converted.csv").rename({"MLM_uL_min_mg": "MLM"})
+    df_computational = pl.read_csv(
+        DATA_DIR_DIRTY / "computational_adme_MLM_converted.csv"
+    ).rename({"MLM_uL_min_mg": "MLM"})
     df_asap = MLM_train.read()
     df_combined = pl.concat([df_computational, df_asap], how="vertical")
     MLM_train_combined.save(df_combined)
+
 
 def make():
     convert_mlm_units()

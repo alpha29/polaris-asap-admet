@@ -1,7 +1,8 @@
 import numpy as np
 import polars as pl
 
-from polaris_asap_admet.io import (DATA_DIR_DIRTY, MDR1_MDCKII_train, MDR1_MDCKII_train_combined)
+from polaris_asap_admet.io import (DATA_DIR_DIRTY, MDR1_MDCKII_train,
+                                   MDR1_MDCKII_train_combined)
 from polaris_asap_admet.logger import logger
 from polaris_asap_admet.util import print_info
 
@@ -49,15 +50,20 @@ def convert_mdr1_mdckii_units() -> pl.DataFrame:
     )
     return df_computational
 
+
 def combine():
-    df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_MDR1-MDCKII_converted.csv").rename({"MDR1_MDCKII_10-6_cm_s": "MDR1-MDCKII"})
+    df_computational = pl.read_csv(
+        DATA_DIR_DIRTY / "computational_adme_MDR1-MDCKII_converted.csv"
+    ).rename({"MDR1_MDCKII_10-6_cm_s": "MDR1-MDCKII"})
     df_asap = MDR1_MDCKII_train.read()
     df_combined = pl.concat([df_computational, df_asap], how="vertical")
     MDR1_MDCKII_train_combined.save(df_combined)
 
+
 def make():
     convert_mdr1_mdckii_units()
     combine()
+
 
 if __name__ == "__main__":
     make()

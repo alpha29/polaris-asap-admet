@@ -38,15 +38,20 @@ def convert_hlm_units():
     print(df_computational.head())
     return df_computational
 
+
 def combine():
-    df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_HLM_converted.csv").rename({"HLM_uL_min_mg": "HLM"})
+    df_computational = pl.read_csv(
+        DATA_DIR_DIRTY / "computational_adme_HLM_converted.csv"
+    ).rename({"HLM_uL_min_mg": "HLM"})
     df_asap = HLM_train.read()
     df_combined = pl.concat([df_computational, df_asap], how="vertical")
     HLM_train_combined.save(df_combined)
 
+
 def make():
     convert_hlm_units()
     combine()
+
 
 if __name__ == "__main__":
     make()

@@ -1,6 +1,6 @@
 import polars as pl
 
-from polaris_asap_admet.io import (DATA_DIR_DIRTY, computational_adme_raw)
+from polaris_asap_admet.io import DATA_DIR_DIRTY, computational_adme_raw
 from polaris_asap_admet.logger import logger
 
 TARGETS = [

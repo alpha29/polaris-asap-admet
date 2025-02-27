@@ -2,7 +2,8 @@ import polars as pl
 from rdkit import Chem
 from rdkit.Chem import Descriptors
 
-from polaris_asap_admet.io import DATA_DIR_DIRTY, KSOL_train, KSOL_train_combined
+from polaris_asap_admet.io import (DATA_DIR_DIRTY, KSOL_train,
+                                   KSOL_train_combined)
 from polaris_asap_admet.logger import logger
 from polaris_asap_admet.util import print_info
 
@@ -63,15 +64,20 @@ def convert_ksol_units() -> pl.DataFrame:
     df_computational.write_csv(DATA_DIR_DIRTY / "computational_adme_KSOL_converted.csv")
     return df_computational
 
+
 def combine():
-    df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_KSOL_converted.csv").rename({"KSOL_uM": "KSOL"})
+    df_computational = pl.read_csv(
+        DATA_DIR_DIRTY / "computational_adme_KSOL_converted.csv"
+    ).rename({"KSOL_uM": "KSOL"})
     df_asap = KSOL_train.read()
     df_combined = pl.concat([df_computational, df_asap], how="vertical")
     KSOL_train_combined.save(df_combined)
 
+
 def make():
     convert_ksol_units()
     combine()
+
 
 if __name__ == "__main__":
     make()
