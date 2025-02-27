@@ -7,14 +7,16 @@ download-computational-adme-data:
 download-comp-data:
 	python -c "from polaris_asap_admet.download import download_comp_data; download_comp_data();"
 
+download-tdc-lipo-az:
+	python -c "from polaris_asap_admet.download import make_tdc_lipo_az; make_tdc_lipo_az();"
+
+download: download-computational-adme-data download-comp-data download-tdc-lipo-az
+
 split-train-by-targets:
 	python -c "from polaris_asap_admet.download import split_train_by_targets; split_train_by_targets();"
 
 split-computational-adme:
 	python -c "from polaris_asap_admet.prep_computational_adme import split_computational_adme; split_computational_adme();"
-
-tdc-lipo-az:
-	python -c "from polaris_asap_admet.download import make_tdc_lipo_az; make_tdc_lipo_az();"
 
 prep-data-hlm:
 	python -c "from polaris_asap_admet.prep_data_hlm import make; make();"
@@ -39,7 +41,6 @@ start-tensorboard:
 open-tensorboard:
 	open http://localhost:6007/
 
-
 run-hlm:
 	python run_chemprop.py HLM data/combined/admet_HLM_train.csv data/raw/test_raw.csv
 
@@ -54,3 +55,6 @@ run-mdr1:
 
 run-mlm:
 	python run_chemprop.py MLM data/combined/admet_MLM_train.csv data/raw/test_raw.csv
+
+export-tensorboard-logs:
+	python -c "from polaris_asap_admet.util import export_tensorboard_logs; export_tensorboard_logs();"
