@@ -15,12 +15,13 @@ DATA_DIR = Path(POLARIS_ASAP_ADMET_HOME) / "data"
 DATA_DIR_RAW = DATA_DIR / "raw"
 DATA_DIR_CLEAN = DATA_DIR / "clean"
 DATA_DIR_DIRTY = DATA_DIR / "dirty"
+DATA_DIR_COMBINED = DATA_DIR / "combined"
 
 # yeah don't do this, but we'll live with it
 DATA_DIR_RAW.mkdir(parents=True, exist_ok=True)
 DATA_DIR_CLEAN.mkdir(parents=True, exist_ok=True)
 DATA_DIR_DIRTY.mkdir(parents=True, exist_ok=True)
-
+DATA_DIR_COMBINED.mkdir(parents=True, exist_ok=True)
 
 @dataclass
 class NamedDataset:
@@ -61,6 +62,9 @@ computational_adme_raw = NamedDataset(
     name="computational_adme_raw", filepath=DATA_DIR_RAW / "ADME_public_set_3521.csv"
 )
 
+##########################
+# ASAP-Discovery data, with just the columns we need for each target
+##########################
 HLM_train = NamedDataset("admet_HLM_train", DATA_DIR_CLEAN / "admet_HLM_train.csv")
 KSOL_train = NamedDataset("admet_KSOL_train", DATA_DIR_CLEAN / "admet_KSOL_train.csv")
 LogD_train = NamedDataset("admet_LogD_train", DATA_DIR_CLEAN / "admet_LogD_train.csv")
@@ -76,3 +80,29 @@ admet_train_clean = {
     "MDR1-MDCKII": MDR1_MDCKII_train,
     "MLM": MLM_train,
 }
+
+##########################
+# ASAP-Discovery data combined with whatever we've added from Computational-ADME, TDC Commons, etc.
+# Should be suitable for training.
+##########################
+HLM_train_combined = NamedDataset("admet_HLM_train", DATA_DIR_COMBINED / "admet_HLM_train.csv")
+KSOL_train_combined = NamedDataset("admet_KSOL_train", DATA_DIR_COMBINED / "admet_KSOL_train.csv")
+LogD_train_combined = NamedDataset("admet_LogD_train", DATA_DIR_COMBINED / "admet_LogD_train.csv")
+MDR1_MDCKII_train_combined = NamedDataset(
+    "admet_MDR1_MDCKII_train", DATA_DIR_COMBINED / "admet_MDR1_MDCKII_train.csv"
+)
+MLM_train_combined = NamedDataset("admet_MLM_train", DATA_DIR_COMBINED / "admet_MLM_train.csv")
+
+admet_train_combined = {
+    "HLM": HLM_train_combined,
+    "KSOL": KSOL_train_combined,
+    "LogD": LogD_train_combined,
+    "MDR1-MDCKII": MDR1_MDCKII_train_combined,
+    "MLM": MLM_train_combined,
+}
+
+##########################
+# TDC Commons datasets
+##########################
+tdc_lipophilicity_az_raw = NamedDataset("tdc_lipophilicity_az_raw", DATA_DIR_RAW / "tdc_lipophilicity_az.csv")
+tdc_lipophilicity_az_clean = NamedDataset("tdc_lipophilicity_az_raw", DATA_DIR_CLEAN / "tdc_lipophilicity_az.csv")

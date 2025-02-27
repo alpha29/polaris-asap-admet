@@ -19,7 +19,7 @@ train_path = os.path.join(".", train_file)
 test_path = os.path.join(".", test_file)
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")  # e.g., 20250220_153022
 output_dir = os.path.join("runs", f"{base_name}_{timestamp}")
-preds_file = f"{base_name}_{timestamp}_preds.csv"
+preds_file = f"runs/{base_name}_{timestamp}_preds.csv"
 
 # Ensure runs/ exists
 os.makedirs("runs", exist_ok=True)
