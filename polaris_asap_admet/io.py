@@ -21,6 +21,7 @@ DATA_DIR_RAW.mkdir(parents=True, exist_ok=True)
 DATA_DIR_CLEAN.mkdir(parents=True, exist_ok=True)
 DATA_DIR_DIRTY.mkdir(parents=True, exist_ok=True)
 
+
 @dataclass
 class NamedDataset:
     name: str
@@ -56,12 +57,16 @@ class NamedDataset:
 
 train_raw = NamedDataset(name="train_raw", filepath=DATA_DIR_RAW / "train_raw.csv")
 test_raw = NamedDataset(name="test_raw", filepath=DATA_DIR_RAW / "test_raw.csv")
-computational_adme_raw = NamedDataset(name="computational_adme_raw", filepath=DATA_DIR_RAW / "ADME_public_set_3521.csv")
+computational_adme_raw = NamedDataset(
+    name="computational_adme_raw", filepath=DATA_DIR_RAW / "ADME_public_set_3521.csv"
+)
 
 HLM_train = NamedDataset("admet_HLM_train", DATA_DIR_CLEAN / "admet_HLM_train.csv")
 KSOL_train = NamedDataset("admet_KSOL_train", DATA_DIR_CLEAN / "admet_KSOL_train.csv")
 LogD_train = NamedDataset("admet_LogD_train", DATA_DIR_CLEAN / "admet_LogD_train.csv")
-MDR1_MDCKII_train = NamedDataset("admet_MDR1_MDCKII_train", DATA_DIR_CLEAN / "admet_MDR1_MDCKII_train.csv")
+MDR1_MDCKII_train = NamedDataset(
+    "admet_MDR1_MDCKII_train", DATA_DIR_CLEAN / "admet_MDR1_MDCKII_train.csv"
+)
 MLM_train = NamedDataset("admet_MLM_train", DATA_DIR_CLEAN / "admet_MLM_train.csv")
 
 admet_train_clean = {

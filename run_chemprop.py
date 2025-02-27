@@ -1,16 +1,16 @@
 import os
 import subprocess
 import sys
-import pandas as pd
 from datetime import datetime
 
+import pandas as pd
 
 # Args: train_file, test_file, config_name
 base_name = sys.argv[1]  # e.g., HLM
 train_file = sys.argv[2]  # e.g., ADME_HLM_train.csv
-test_file = sys.argv[3]   # e.g., ADME_HLM_test.csv
+test_file = sys.argv[3]  # e.g., ADME_HLM_test.csv
 
-targets = ['HLM', 'KSOL', 'LOGD', 'MDR1-MDCKII', 'MLM']
+targets = ["HLM", "KSOL", "LOGD", "MDR1-MDCKII", "MLM"]
 if base_name not in targets:
     raise ValueError(f"Invalid base_name {base_name}; must be one of {targets}")
 

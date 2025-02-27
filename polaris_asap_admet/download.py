@@ -9,7 +9,7 @@ from polaris.competition import CompetitionSpecification
 from polaris.dataset import Subset
 from typeguard import typechecked
 
-from polaris_asap_admet.io import test_raw, train_raw, admet_train_clean
+from polaris_asap_admet.io import admet_train_clean, test_raw, train_raw
 from polaris_asap_admet.logger import logger
 from polaris_asap_admet.util import print_info
 
@@ -75,7 +75,14 @@ def download_comp_data():
     logger.info("Done.")
 
 
-TARGETS = ["HLM", "KSOL", "LogD", "MDR1-MDCKII", "MLM",]
+TARGETS = [
+    "HLM",
+    "KSOL",
+    "LogD",
+    "MDR1-MDCKII",
+    "MLM",
+]
+
 
 def split_train_by_targets():
     """

@@ -13,8 +13,13 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ## Setup
 
 ```
+# Create venv and install dependencies
 uv sync
 source .venv/bin/activate
+
+# Setup .env
+cp .env.example .env
+source .env
 ```
 
 ## Usage
