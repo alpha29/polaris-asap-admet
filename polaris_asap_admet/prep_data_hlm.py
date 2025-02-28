@@ -1,6 +1,6 @@
 import polars as pl
 
-from polaris_asap_admet.io import DATA_DIR_DIRTY, HLM_train, HLM_train_combined
+from polaris_asap_admet.io import DATA_DIR_DIRTY, asap_HLM_train, admet_HLM_train_combined, computational_adme_HLM_dirty, computational_adme_HLM_converted
 from polaris_asap_admet.logger import logger
 from polaris_asap_admet.util import print_info
 
@@ -19,7 +19,8 @@ def convert_hlm_units():
     Convert to uL/min/mg.
     """
     logger.info("Converting HLM units...")
-    df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_HLM_dirty.csv")
+    #df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_HLM_dirty.csv")
+    df_computational = computational_adme_HLM_dirty.read()
     print_info(df_computational)
 
     # Unlog and convert
@@ -34,18 +35,18 @@ def convert_hlm_units():
     )
     df_computational = df_computational.filter(pl.col("HLM_uL_min_mg").is_not_null())
     df_computational = df_computational.drop("LOG_HLM_CLint")
-    df_computational.write_csv(DATA_DIR_DIRTY / "computational_adme_HLM_converted.csv")
+    #df_computational.write_csv(DATA_DIR_DIRTY / "computational_adme_HLM_converted.csv")
+    computational_adme_HLM_converted.save(df_computational)
     print(df_computational.head())
     return df_computational
 
 
 def combine():
-    df_computational = pl.read_csv(
-        DATA_DIR_DIRTY / "computational_adme_HLM_converted.csv"
-    ).rename({"HLM_uL_min_mg": "HLM"})
-    df_asap = HLM_train.read()
+    #df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_HLM_converted.csv").rename({"HLM_uL_min_mg": "HLM"})
+    df_computational = computational_adme_HLM_converted.read().rename({"HLM_uL_min_mg": "HLM"})
+    df_asap = asap_HLM_train.read()
     df_combined = pl.concat([df_computational, df_asap], how="vertical")
-    HLM_train_combined.save(df_combined)
+    admet_HLM_train_combined.save(df_combined)
 
 
 def make():

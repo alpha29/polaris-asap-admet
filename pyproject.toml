@@ -13,6 +13,7 @@ dependencies = [
     "polars>=1.23.0",
     "rdkit>=2024.9.5",
     "ruff>=0.9.7",
+    "spyrmsd>=0.8.0",
     "tensorboard>=2.19.0",
     "typeguard>=4.4.2",
 ]

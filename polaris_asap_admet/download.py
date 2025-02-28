@@ -5,10 +5,10 @@ from polaris.competition import CompetitionSpecification
 from polaris.dataset import Dataset
 from typeguard import typechecked
 
-from polaris_asap_admet.io import (admet_train_clean,
+from polaris_asap_admet.io import (asap_train_clean,
                                    tdc_lipophilicity_az_clean,
-                                   tdc_lipophilicity_az_raw, test_raw,
-                                   train_raw)
+                                   tdc_lipophilicity_az_raw, asap_test_raw,
+                                   asap_train_raw)
 from polaris_asap_admet.logger import logger
 from polaris_asap_admet.util import print_info
 
@@ -50,7 +50,7 @@ def get_df_train_for_comp(
     print_info(df_train)
     if save:
         logger.info("Saving...")
-        train_raw.save(df_train)
+        asap_train_raw.save(df_train)
     return df_train
 
 
@@ -66,7 +66,7 @@ def get_df_test_for_comp(
     print_info(df_test)
     if save:
         logger.info("Saving...")
-        test_raw.save(df_test)
+        asap_test_raw.save(df_test)
     return df_test
 
 
@@ -91,13 +91,13 @@ def split_train_by_targets():
     """
     Create separate training datasets for each target.
     """
-    df = train_raw.read()
+    df = asap_train_raw.read()
     for tgt in TARGETS:
         logger.info(f"Splitting training data for target {tgt}...")
         df_tgt = df.select(["CXSMILES", tgt]).filter(pl.col(tgt).is_not_null())
         print_info(df_tgt)
         logger.info(f"Saving {tgt}...")
-        admet_train_clean[tgt].save(df_tgt)
+        asap_train_clean[tgt].save(df_tgt)
     logger.info("Done.")
 
 

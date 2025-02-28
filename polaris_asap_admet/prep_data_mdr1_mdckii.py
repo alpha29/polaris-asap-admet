@@ -1,8 +1,8 @@
 import numpy as np
 import polars as pl
 
-from polaris_asap_admet.io import (DATA_DIR_DIRTY, MDR1_MDCKII_train,
-                                   MDR1_MDCKII_train_combined)
+from polaris_asap_admet.io import (DATA_DIR_DIRTY, asap_MDR1_MDCKII_train,
+                                   admet_MDR1_MDCKII_train_combined, computational_adme_MDR1_MDCKII_dirty, computational_adme_MDR1_MDCKII_converted)
 from polaris_asap_admet.logger import logger
 from polaris_asap_admet.util import print_info
 
@@ -21,9 +21,8 @@ def convert_mdr1_mdckii_units() -> pl.DataFrame:
     Assumes log(efflux ratio) correlates with permeability, adjusted to match ASAP units.
     """
     logger.info("Converting MDR1-MDCKII units..")
-    df_computational = pl.read_csv(
-        DATA_DIR_DIRTY / "computational_adme_MDR1-MDCKII_dirty.csv"
-    )
+    #df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_MDR1-MDCKII_dirty.csv")
+    df_computational = computational_adme_MDR1_MDCKII_dirty.read()
     print_info(df_computational)
 
     # Convert efflux ratio (unitless) to MDR1-MDCKII permeability (10^-6 cm/s)
@@ -45,19 +44,17 @@ def convert_mdr1_mdckii_units() -> pl.DataFrame:
     df_computational = df_computational.drop("efflux")
 
     print(df_computational.head())
-    df_computational.write_csv(
-        DATA_DIR_DIRTY / "computational_adme_MDR1-MDCKII_converted.csv"
-    )
+    #df_computational.write_csv(DATA_DIR_DIRTY / "computational_adme_MDR1-MDCKII_converted.csv")
+    computational_adme_MDR1_MDCKII_converted.save(df_computational)
     return df_computational
 
 
 def combine():
-    df_computational = pl.read_csv(
-        DATA_DIR_DIRTY / "computational_adme_MDR1-MDCKII_converted.csv"
-    ).rename({"MDR1_MDCKII_10-6_cm_s": "MDR1-MDCKII"})
-    df_asap = MDR1_MDCKII_train.read()
+    #df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_MDR1-MDCKII_converted.csv").rename({"MDR1_MDCKII_10-6_cm_s": "MDR1-MDCKII"})
+    df_computational = computational_adme_MDR1_MDCKII_converted.read().rename({"MDR1_MDCKII_10-6_cm_s": "MDR1-MDCKII"})
+    df_asap = asap_MDR1_MDCKII_train.read()
     df_combined = pl.concat([df_computational, df_asap], how="vertical")
-    MDR1_MDCKII_train_combined.save(df_combined)
+    admet_MDR1_MDCKII_train_combined.save(df_combined)
 
 
 def make():

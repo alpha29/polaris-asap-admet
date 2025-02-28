@@ -24,6 +24,15 @@ source .env
 
 ## Usage
 
+```
+polaris login --overwrite
+make download
+make split-by-targets
+make prep-data
+
+# or, run chemprop for individual targets via (e.g.) `make run-hlm`
+make run
+```
 
 
 ## Author

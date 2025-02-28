@@ -1,14 +1,14 @@
 import polars as pl
 
-from polaris_asap_admet.io import (LogD_train, LogD_train_combined,
+from polaris_asap_admet.io import (asap_LogD_train, admet_LogD_train_combined,
                                    tdc_lipophilicity_az_clean)
 
 
 def combine():
     df_tdc = tdc_lipophilicity_az_clean.read()
-    df_asap = LogD_train.read()
+    df_asap = asap_LogD_train.read()
     df_combined = pl.concat([df_tdc, df_asap], how="vertical")
-    LogD_train_combined.save(df_combined)
+    admet_LogD_train_combined.save(df_combined)
 
 
 def make():

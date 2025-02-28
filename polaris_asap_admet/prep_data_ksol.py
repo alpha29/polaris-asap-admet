@@ -2,8 +2,8 @@ import polars as pl
 from rdkit import Chem
 from rdkit.Chem import Descriptors
 
-from polaris_asap_admet.io import (DATA_DIR_DIRTY, KSOL_train,
-                                   KSOL_train_combined)
+from polaris_asap_admet.io import (DATA_DIR_DIRTY, asap_KSOL_train,
+                                   admet_KSOL_train_combined, computational_adme_KSOL_dirty, computational_adme_KSOL_converted)
 from polaris_asap_admet.logger import logger
 from polaris_asap_admet.util import print_info
 
@@ -35,7 +35,8 @@ def convert_ksol_units() -> pl.DataFrame:
     """
     logger.info("Converting KSOL units..")
     # Load Computational-ADME Solubility data (correct column name)
-    df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_KSOL_dirty.csv")
+    #df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_KSOL_dirty.csv")
+    df_computational = computational_adme_KSOL_dirty.read()
     print_info(df_computational)
 
     # Calculate molar mass for each SMILES
@@ -61,17 +62,17 @@ def convert_ksol_units() -> pl.DataFrame:
     df_computational = df_computational.drop("logS_ug_mL", "molar_mass_mg_umol")
 
     print(df_computational.head())
-    df_computational.write_csv(DATA_DIR_DIRTY / "computational_adme_KSOL_converted.csv")
+    #df_computational.write_csv(DATA_DIR_DIRTY / "computational_adme_KSOL_converted.csv")
+    computational_adme_KSOL_converted.save(df_computational)
     return df_computational
 
 
 def combine():
-    df_computational = pl.read_csv(
-        DATA_DIR_DIRTY / "computational_adme_KSOL_converted.csv"
-    ).rename({"KSOL_uM": "KSOL"})
-    df_asap = KSOL_train.read()
+    #df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_KSOL_converted.csv").rename({"KSOL_uM": "KSOL"})
+    df_computational = computational_adme_KSOL_converted.read().rename({"KSOL_uM": "KSOL"})
+    df_asap = asap_KSOL_train.read()
     df_combined = pl.concat([df_computational, df_asap], how="vertical")
-    KSOL_train_combined.save(df_combined)
+    admet_KSOL_train_combined.save(df_combined)
 
 
 def make():
