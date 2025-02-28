@@ -1,6 +1,6 @@
 import polars as pl
 
-from polaris_asap_admet.io import (asap_LogD_train, admet_LogD_train_combined,
+from polaris_asap_admet.io import (admet_LogD_train_combined, asap_LogD_train,
                                    tdc_lipophilicity_az_clean)
 
 

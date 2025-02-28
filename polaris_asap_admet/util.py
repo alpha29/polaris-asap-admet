@@ -25,8 +25,9 @@ def export_tensorboard_logs():
     """
     Export tensorboard logs to CSV, including timestamped directory names.
     """
-    from tensorboard.backend.event_processing import event_accumulator
     import os
+
+    from tensorboard.backend.event_processing import event_accumulator
 
     for root, _, files in os.walk("runs/"):
         for file in files:
@@ -42,14 +43,17 @@ def export_tensorboard_logs():
                         values = [d.value for d in data]
                         # Extract directory name (e.g., HLM_20250227_012525) from root path
                         # cbrown:  ...nope, we fixed run_name above
-                        #run_name = os.path.basename(root)  # Gets the last folder, e.g., HLM_20250227_012525
-                        print(f"{run_name}_{tag}: Steps {min(steps)}–{max(steps)}, Values {min(values):.4f}–{max(values):.4f}")
+                        # run_name = os.path.basename(root)  # Gets the last folder, e.g., HLM_20250227_012525
+                        print(
+                            f"{run_name}_{tag}: Steps {min(steps)}–{max(steps)}, Values {min(values):.4f}–{max(values):.4f}"
+                        )
                         # Optional: Write to CSV
                         # with open(f"runs/{run_name}_{tag}.csv", "w") as f:
                         #     f.write("step,value\n")
                         #     for step, value in zip(steps, values):
                         #         f.write(f"{step},{value}\n")
     print("Done.")
+
 
 if __name__ == "__main__":
     export_tensorboard_logs()

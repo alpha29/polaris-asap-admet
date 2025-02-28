@@ -1,6 +1,9 @@
 import polars as pl
 
-from polaris_asap_admet.io import DATA_DIR_DIRTY, asap_MLM_train, admet_MLM_train_combined, computational_adme_MLM_dirty, computational_adme_MLM_converted
+from polaris_asap_admet.io import (DATA_DIR_DIRTY, admet_MLM_train_combined,
+                                   asap_MLM_train,
+                                   computational_adme_MLM_converted,
+                                   computational_adme_MLM_dirty)
 from polaris_asap_admet.logger import logger
 from polaris_asap_admet.util import print_info
 
@@ -21,9 +24,7 @@ def convert_mlm_units():
     Also:  How similar are rats and mice, anyway?  Perhaps we'll find out!
     """
     logger.info("Converting MLM units...")
-    #df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_MLM_dirty.csv")
     df_computational = computational_adme_MLM_dirty.read()
-    print_info(df_computational)
 
     scaling_factor = 0.5  # TODO: NOT sure I buy this value, need to double check
     # unlog
@@ -39,14 +40,15 @@ def convert_mlm_units():
     # drop LOG_RLM_CLint
     df_computational = df_computational.drop("LOG_RLM_CLint_ml_min_kg")
     print(df_computational.head())
-    #df_computational.write_csv(DATA_DIR_DIRTY / "computational_adme_MLM_converted.csv")
+
     computational_adme_MLM_converted.save(df_computational)
     return df_computational
 
 
 def combine():
-    #df_computational = pl.read_csv(DATA_DIR_DIRTY / "computational_adme_MLM_converted.csv").rename({"MLM_uL_min_mg": "MLM"})
-    df_computational = computational_adme_MLM_converted.read().rename({"MLM_uL_min_mg": "MLM"})
+    df_computational = computational_adme_MLM_converted.read().rename(
+        {"MLM_uL_min_mg": "MLM"}
+    )
     df_asap = asap_MLM_train.read()
     df_combined = pl.concat([df_computational, df_asap], how="vertical")
     admet_MLM_train_combined.save(df_combined)

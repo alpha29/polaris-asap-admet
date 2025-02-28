@@ -1,6 +1,7 @@
 import polars as pl
 
-from polaris_asap_admet.io import DATA_DIR_DIRTY, computational_adme_raw, computational_adme_dirty
+from polaris_asap_admet.io import (DATA_DIR_DIRTY, computational_adme_dirty,
+                                   computational_adme_raw)
 from polaris_asap_admet.logger import logger
 
 TARGETS = [
@@ -48,5 +49,5 @@ def split_computational_adme() -> None:
     for tgt, df_tgt in dict_df.items():
         logger.info(f"Saving {tgt}...")
         computational_adme_dirty[tgt].save(df_tgt)
-        #df_tgt.write_csv(DATA_DIR_DIRTY / f"computational_adme_{tgt}_dirty.csv")
+
     logger.info("Done.")

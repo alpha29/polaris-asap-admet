@@ -29,6 +29,7 @@ class NamedDataset:
     """
     put a tags dict in here someday or something
     """
+
     name: str
     filepath: Path | str
 
@@ -60,8 +61,12 @@ class NamedDataset:
         return df
 
 
-asap_train_raw = NamedDataset(name="asap_train_raw", filepath=DATA_DIR_RAW / "asap_train_raw.csv")
-asap_test_raw = NamedDataset(name="asap_test_raw", filepath=DATA_DIR_RAW / "asap_test_raw.csv")
+asap_train_raw = NamedDataset(
+    name="asap_train_raw", filepath=DATA_DIR_RAW / "asap_train_raw.csv"
+)
+asap_test_raw = NamedDataset(
+    name="asap_test_raw", filepath=DATA_DIR_RAW / "asap_test_raw.csv"
+)
 computational_adme_raw = NamedDataset(
     name="computational_adme_raw", filepath=DATA_DIR_RAW / "ADME_public_set_3521.csv"
 )
@@ -73,14 +78,16 @@ computational_adme_HLM_dirty = NamedDataset(
     "computational_adme_HLM_dirty", DATA_DIR_DIRTY / "computational_adme_HLM_dirty.csv"
 )
 computational_adme_KSOL_dirty = NamedDataset(
-    "computational_adme_KSOL_dirty", DATA_DIR_DIRTY / "computational_adme_KSOL_dirty.csv"
+    "computational_adme_KSOL_dirty",
+    DATA_DIR_DIRTY / "computational_adme_KSOL_dirty.csv",
 )
 computational_adme_LogD_dirty = NamedDataset(
-    "computational_adme_LogD_dirty", DATA_DIR_DIRTY / "computational_adme_LogD_dirty.csv"
+    "computational_adme_LogD_dirty",
+    DATA_DIR_DIRTY / "computational_adme_LogD_dirty.csv",
 )
 computational_adme_MDR1_MDCKII_dirty = NamedDataset(
     "computational_adme_MDR1_MDCKII_dirty",
-    DATA_DIR_DIRTY / "computational_adme_MDR1_MDCKII_dirty.csv"
+    DATA_DIR_DIRTY / "computational_adme_MDR1_MDCKII_dirty.csv",
 )
 computational_adme_MLM_dirty = NamedDataset(
     "computational_adme_MLM_dirty", DATA_DIR_DIRTY / "computational_adme_MLM_dirty.csv"
@@ -95,19 +102,24 @@ computational_adme_dirty = {
 }
 
 computational_adme_HLM_converted = NamedDataset(
-    "computational_adme_HLM_converted", DATA_DIR_DIRTY / "computational_adme_HLM_converted.csv"
+    "computational_adme_HLM_converted",
+    DATA_DIR_DIRTY / "computational_adme_HLM_converted.csv",
 )
 computational_adme_KSOL_converted = NamedDataset(
-    "computational_adme_KSOL_converted", DATA_DIR_DIRTY / "computational_adme_KSOL_converted.csv"
+    "computational_adme_KSOL_converted",
+    DATA_DIR_DIRTY / "computational_adme_KSOL_converted.csv",
 )
 computational_adme_LogD_converted = NamedDataset(
-    "computational_adme_LogD_converted", DATA_DIR_DIRTY / "computational_adme_LogD_converted.csv"
+    "computational_adme_LogD_converted",
+    DATA_DIR_DIRTY / "computational_adme_LogD_converted.csv",
 )
 computational_adme_MDR1_MDCKII_converted = NamedDataset(
-    "computational_adme_MDR1_MDCKII_converted", DATA_DIR_DIRTY / "computational_adme_MDR1_MDCKII_converted.csv"
+    "computational_adme_MDR1_MDCKII_converted",
+    DATA_DIR_DIRTY / "computational_adme_MDR1_MDCKII_converted.csv",
 )
 computational_adme_MLM_converted = NamedDataset(
-    "computational_adme_MLM_converted", DATA_DIR_DIRTY / "computational_adme_MLM_converted.csv"
+    "computational_adme_MLM_converted",
+    DATA_DIR_DIRTY / "computational_adme_MLM_converted.csv",
 )
 
 computational_adme_converted = {
@@ -122,8 +134,12 @@ computational_adme_converted = {
 # ASAP-Discovery data, with just the columns we need for each target
 ##########################
 asap_HLM_train = NamedDataset("asap_HLM_train", DATA_DIR_CLEAN / "asap_HLM_train.csv")
-asap_KSOL_train = NamedDataset("asap_KSOL_train", DATA_DIR_CLEAN / "asap_KSOL_train.csv")
-asap_LogD_train = NamedDataset("asap_LogD_train", DATA_DIR_CLEAN / "asap_LogD_train.csv")
+asap_KSOL_train = NamedDataset(
+    "asap_KSOL_train", DATA_DIR_CLEAN / "asap_KSOL_train.csv"
+)
+asap_LogD_train = NamedDataset(
+    "asap_LogD_train", DATA_DIR_CLEAN / "asap_LogD_train.csv"
+)
 asap_MDR1_MDCKII_train = NamedDataset(
     "asap_MDR1_MDCKII_train", DATA_DIR_CLEAN / "asap_MDR1_MDCKII_train.csv"
 )

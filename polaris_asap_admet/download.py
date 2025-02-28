@@ -5,10 +5,9 @@ from polaris.competition import CompetitionSpecification
 from polaris.dataset import Dataset
 from typeguard import typechecked
 
-from polaris_asap_admet.io import (asap_train_clean,
-                                   tdc_lipophilicity_az_clean,
-                                   tdc_lipophilicity_az_raw, asap_test_raw,
-                                   asap_train_raw)
+from polaris_asap_admet.io import (asap_test_raw, asap_train_clean,
+                                   asap_train_raw, tdc_lipophilicity_az_clean,
+                                   tdc_lipophilicity_az_raw)
 from polaris_asap_admet.logger import logger
 from polaris_asap_admet.util import print_info
 
